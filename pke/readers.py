@@ -74,7 +74,8 @@ class RawTextReader(Reader):
             nlp = kwargs['nlp']
         else:
             nlp = spacy.load(self.language, max_length=max_length)
-        spacy_doc = nlp(text)
+        spacy_doc = nlp(text, disable["parser", "ner"])  # TODO this looks fine 
+        # for now but should be done using kwargs since some extractors might want parse or ner
 
         sentences = []
         for sentence_id, sentence in enumerate(spacy_doc.sents):

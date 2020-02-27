@@ -61,6 +61,21 @@ class LoadFile(object):
 
         self.stoplist = None
         """List of stopwords."""
+    
+    def load_from_extr_w_loaded_doc(self, ex):
+        self.input_file = ex.doc.input_file
+
+        # set the language of the document
+        self.language = ex.language
+
+        # set the sentences
+        self.sentences = ex.doc.sentences
+
+        # initialize the stoplist
+        self.stoplist = ex.stoplist
+
+        # word normalization
+        self.normalization = ex.normalization
 
     def load_document(self, input, **kwargs):
         """Loads the content of a document/string/stream in a given language.

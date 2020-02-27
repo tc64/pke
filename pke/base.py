@@ -63,13 +63,13 @@ class LoadFile(object):
         """List of stopwords."""
     
     def load_from_extr_w_loaded_doc(self, ex):
-        self.input_file = ex.doc.input_file
+        self.input_file = ex.input_file
 
         # set the language of the document
         self.language = ex.language
 
         # set the sentences
-        self.sentences = ex.doc.sentences
+        self.sentences = ex.sentences
 
         # initialize the stoplist
         self.stoplist = ex.stoplist

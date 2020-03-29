@@ -109,10 +109,10 @@ class TextRank(LoadFile):
             pos = {'NOUN', 'PROPN', 'ADJ'}
 
         def isvalid(sentence, i):
-            meta_force = sentence.meta.get('force', [])
+            meta_force = sentence.meta.get('force', set())
             force = False
             if meta_force and len(meta_force) > i:
-                force = meta_force[i]
+                force = i in meta_force
             return (sentence.pos[i] in pos) or force
 
         # flatten document as a sequence of (word, pass_syntactic_filter) tuples

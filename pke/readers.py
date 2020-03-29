@@ -45,6 +45,29 @@ class MinimalCoreNLPReader(Reader):
         return doc
 
 
+class SpacyDocReader(Reader):
+    def __init__(self, language=None):
+        self.language = language
+        if language is None:
+            self.language = 'en'
+
+    def read(self, sdoc, **kwargs):
+        sentences = []
+        for sentence_id, sentence in enumerate(sdoc.sents):
+            sentences.append({
+                "words": [token.text for token in sentence],
+                "lemmas": [token.lemma_ for token in sentence],
+                "POS": [token.pos_ for token in sentence],
+                "char_offsets": [(token.idx, token.idx + len(token.text))
+                                 for token in sentence]
+            })
+
+        doc = Document.from_sentences(sentences,
+                                      input_file=kwargs.get('input_file', None),
+                                      **kwargs)
+        return doc
+
+
 class RawTextReader(Reader):
     """Reader for raw text."""
 

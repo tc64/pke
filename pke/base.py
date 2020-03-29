@@ -5,12 +5,14 @@
 from collections import defaultdict
 
 from pke.data_structures import Candidate, Document
-from pke.readers import MinimalCoreNLPReader, RawTextReader
+from pke.readers import MinimalCoreNLPReader, RawTextReader, SpacyDocReader
 
 from nltk.stem.snowball import SnowballStemmer
 from nltk import RegexpParser
 from nltk.corpus import stopwords
 from nltk.tag.mapping import map_tag
+
+from spacy.tokens.doc import Doc as spacy_doc_type
 
 from string import punctuation
 import os
@@ -102,7 +104,11 @@ class LoadFile(object):
         # initialize document
         doc = Document()
 
-        if isinstance(input, string_types):
+        if isinstance(input, spacy_doc_type):
+            parser = SpacyDocReader(language=language)
+            doc = parser.read(sdoc=input)
+
+        elif isinstance(input, string_types):
 
             # if input is an input file
             if os.path.isfile(input):

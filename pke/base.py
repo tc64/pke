@@ -103,8 +103,10 @@ class LoadFile(object):
 
         # initialize document
         doc = Document()
+        if isinstance(input, Document):
+            doc = input
 
-        if isinstance(input, spacy_doc_type):
+        elif isinstance(input, spacy_doc_type):
             parser = SpacyDocReader(language=language)
             doc = parser.read(sdoc=input)
 

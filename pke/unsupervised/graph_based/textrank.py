@@ -108,8 +108,15 @@ class TextRank(LoadFile):
         if pos is None:
             pos = {'NOUN', 'PROPN', 'ADJ'}
 
+        def isvalid(sentence, i):
+            meta_force = sentence.meta.get('force', [])
+            force = False
+            if meta_force and len(meta_force) > i:
+                force = meta_force[i]
+            return (sentence.pos[i] in pos) or force
+
         # flatten document as a sequence of (word, pass_syntactic_filter) tuples
-        text = [(word, sentence.pos[i] in pos) for sentence in self.sentences
+        text = [(word, isvalid(sentence, i)) for sentence in self.sentences
                 for i, word in enumerate(sentence.stems)]
 
         # add nodes to the graph

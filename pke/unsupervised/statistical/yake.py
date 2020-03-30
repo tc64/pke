@@ -137,8 +137,8 @@ class YAKE(LoadFile):
             for j, word in enumerate(sentence.words):
 
                 # consider words containing at least one alpha-numeric character
-                if self._is_alphanum(word) and \
-                        not re.search('(?i)^-[lr][rcs]b-$', word):
+                #if self._is_alphanum(word) and \
+                #        not re.search('(?i)^-[lr][rcs]b-$', word):
 
                     # get the word or stem
                     index = word.lower()
@@ -258,7 +258,8 @@ class YAKE(LoadFile):
         for word in self.words:
 
             # Indicating whether the word is a stopword (vitordouzi change)
-            self.features[word]['isstop'] = word in stoplist or len(word) < 3
+            isstop = (word in stoplist) or (len(word) < 3) or (re.search('(?i)^-[lr][rcs]b-$', word))
+            self.features[word]['isstop'] = isstop
 
             # Term Frequency
             self.features[word]['TF'] = len(self.words[word])
@@ -363,13 +364,7 @@ class YAKE(LoadFile):
                     prod_ = 1.
                     sum_ = 0.
                     for j, token in enumerate(tokens):
-                        # second condition below is because punctuation ends up not part of self.words due
-                        # to logic in _vocabulary_building. this is probably not the ideal fix, a bit of a hack,
-                        # because really all tokens should go in there. but I'm not sure if there are unintended
-                        # consequences to changing that logic. in any case phrase final punctuation marks
-                        # probably shouldn't be part of key phrases (this is here because i got a KeyError for a
-                        # question mark token which was partof a phrase from NER output)
-                        if self.features[token]['isstop'] or 'isstop' not in self.features[token]:
+                        if self.features[token]['isstop']:
                             term_left = tokens[j-1]
                             term_right = tokens[j+1]
                             term_stop = token

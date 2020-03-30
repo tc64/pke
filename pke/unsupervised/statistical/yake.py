@@ -363,6 +363,8 @@ class YAKE(LoadFile):
                     prod_ = 1.
                     sum_ = 0.
                     for j, token in enumerate(tokens):
+                        if 'isstop' not in self.features[token]:
+                            print(1)
                         if self.features[token]['isstop']:
                             term_left = tokens[j-1]
                             term_right = tokens[j+1]

@@ -363,9 +363,13 @@ class YAKE(LoadFile):
                     prod_ = 1.
                     sum_ = 0.
                     for j, token in enumerate(tokens):
-                        if 'isstop' not in self.features[token]:
-                            print(1)
-                        if self.features[token]['isstop']:
+                        # second condition below is because punctuation ends up not part of self.words due
+                        # to logic in _vocabulary_building. this is probably not the ideal fix, a bit of a hack,
+                        # because really all tokens should go in there. but I'm not sure if there are unintended
+                        # consequences to changing that logic. in any case phrase final punctuation marks
+                        # probably shouldn't be part of key phrases (this is here because i got a KeyError for a
+                        # question mark token which was partof a phrase from NER output)
+                        if self.features[token]['isstop'] or 'isstop' not in self.features[token]:
                             term_left = tokens[j-1]
                             term_right = tokens[j+1]
                             term_stop = token

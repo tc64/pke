@@ -6,9 +6,10 @@ setup(name='pke',
       author='pke contributors',
       author_email='florian.boudin@univ-nantes.fr',
       license='gnu',
-      packages=['pke', 'pke.unsupervised', 'pke.supervised',
-                'pke.supervised.feature_based', 'pke.unsupervised.graph_based',
-                'pke.unsupervised.statistical', 'pke.supervised.neural_based'],
+      #packages=['pke', 'pke.unsupervised', 'pke.supervised',
+      #          'pke.supervised.feature_based', 'pke.unsupervised.graph_based',
+      #          'pke.unsupervised.statistical', 'pke.supervised.neural_based'],
+      packages=['pke', 'pke.unsupervised', 'pke.unsupervised.graph_based', 'pke.unsupervised.statistical']
       url="https://github.com/boudinfl/pke",
       install_requires=[
           'nltk',

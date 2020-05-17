@@ -8,4 +8,4 @@ from pke.utils import (load_document_frequency_file, compute_document_frequency,
                        compute_lda_model, load_document_as_bos,
                        compute_pairwise_similarity_matrix)
 import pke.unsupervised
-import pke.supervised
+#import pke.supervised
